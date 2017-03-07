@@ -1,6 +1,5 @@
 // Bitmap font is based on Hamneggs's https://www.shadertoy.com/view/4dtGD2
 // Tessellation code is based on soma_arc's https://www.shadertoy.com/view/4t3SDs
-// main文の初めと終わり
 //#define shadertoy 1
 #define _f float
 const lowp _f CH_C    = _f(0xe111e), CH_E    = _f(0xf171f), CH_F    = _f(0xf1711),
