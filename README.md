@@ -1,6 +1,6 @@
 # glsl
-* ifdef
-    * header
+## ifdef 
+* header
 ````
 //#define shadertoy https://www.shadertoy.com/view/MtVXzz
 #ifndef shadertoy
@@ -8,7 +8,7 @@
 #endif
 ````
 
-    * begin of main
+* begin of main
 
 ````
 #ifndef shadertoy
@@ -22,7 +22,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 #endif
 ````
 
-    * end of main
+* end of main
 
 ````
 #ifndef shadertoy
@@ -36,5 +36,5 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 #endif 
 ````
 
-* vscode GLSL Preview
+## vscode GLSL Preview
     * iMouse is not supported
