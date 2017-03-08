@@ -8,7 +8,8 @@
 #endif
 ````
 
-    * begin of main
+* begin of main
+
 ````
 #ifndef shadertoy
 void main()
@@ -21,7 +22,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 #endif
 ````
 
-    * end of main
+* end of main
+
 ````
 #ifndef shadertoy
 	    fragColor = vec4(red,0.,blue,1.0);
