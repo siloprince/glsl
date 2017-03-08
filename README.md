@@ -26,7 +26,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
 ````
 #ifndef shadertoy
-	    fragColor = vec4(red,0.,blue,1.0);
+	    fragColor = vec4(red,green,blue,1.0);
 #else
         fragColor = getNyanCatColor(vec2(blue,red),time);    
 #endif 
