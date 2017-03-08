@@ -6,6 +6,7 @@
 #ifndef shadertoy
 #define texture vec4(0);
 #endif
+````
 
     * begin of main
 ````
@@ -18,6 +19,7 @@ void main()
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
 #endif
+````
 
     * end of main
 ````
@@ -30,6 +32,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 #ifndef shadertoy
     gl_FragColor = fragColor;
 #endif 
+````
 
 * vscode GLSL Preview
     * iMouse is not supported
