@@ -1,4 +1,7 @@
-//#define shadertoy 1
+//#define shadertoy https://www.shadertoy.com/view/ltKXRR
+#ifndef shadertoy
+#define texture vec4(0);
+#endif
 const float maxiter=256.;
 const float pi = 4.0*atan(1.,1.);
 const float pi2 = pi*2.;
@@ -41,9 +44,7 @@ vec4 getNyanCatColor( vec2 p, float time)
         r.x = mix(pxc, pxd, r.x);
         r.y = mix(pyb, pyc,r.y);
         r = transNyanCat(r, time);
-#ifdef shadertoy        
-  	    txtr = texture( iChannel0, r );
-#endif     
+  	    txtr = texture( iChannel0, r );    
        if (!(txtr.x==1. && txtr.y==1. && txtr.z==1. )) {
            return txtr;
        }
@@ -53,9 +54,7 @@ vec4 getNyanCatColor( vec2 p, float time)
         q.x = mix(pxb, pxc, q.x); // intentinally shoten to avoid conflict
         q.y = mix(pyc, pyd, q.y);
         q = transNyanCat(q, time);
-#ifdef shadertoy              
   	    txtr = texture( iChannel0, q );
-#endif    
        if (!(txtr.x==1. && txtr.y==1. && txtr.z==1. )) {
           return txtr;
        }
@@ -63,9 +62,7 @@ vec4 getNyanCatColor( vec2 p, float time)
     p.x = mix(pxb, pxc, p.x);
     p.y = mix(pyb, pyc, p.y);   
     p = transNyanCat(p, time);
-#ifdef shadertoy    
 	txtr = texture( iChannel0, p );
-#endif
     return txtr;
 }
 

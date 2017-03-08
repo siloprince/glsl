@@ -1,4 +1,7 @@
-//#define shadertoy 1
+//#define shadertoy https://www.shadertoy.com/view/MtGXzz
+#ifndef shadertoy
+#define texture vec4(0);
+#endif
 const float maxiter=256.;
 const float pi = 4.0*atan(1.,1.);
 const float pi2 = pi*2.;
@@ -20,11 +23,7 @@ vec4 getNyanCatColor( vec2 p, float time )
 	p = clamp(p,0.0,1.0);
 	float fr = floor( mod( 20.0*time, 6.0 ) );
 	p.x += fr*40.0/256.0;
-#ifndef shadertoy
-    return vec4(0);
-#else
 	return texture( iChannel0, p );
-#endif
 }
 
 #ifndef shadertoy

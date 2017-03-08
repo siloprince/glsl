@@ -1,4 +1,7 @@
 //#define shadertoy https://www.shadertoy.com/view/MtVXzz
+#ifndef shadertoy
+#define texture vec4(0);
+#endif
 precision mediump float;
 
 // from Syntopia http://blog.hvidtfeldts.net/index.php/2015/01/path-tracing-3d-fractals/
@@ -119,12 +122,8 @@ vec4 getNyanCatColor( vec2 p, float time )
 	p.y = 0.5 + 1.2*(0.5-p.y);
 	p = clamp(p,0.0,1.0);
 	float fr = floor( mod( 20.0*time, 6.0 ) );
-	p.x += fr*40.0/256.0;
-#ifndef shadertoy
-    return vec4(0);
-#else    
+	p.x += fr*40.0/256.0;    
 	return texture( iChannel0, p );
-#endif
 }
 
 int calc(vec3 eye, vec3 ray){
