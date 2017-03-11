@@ -85,15 +85,8 @@ vec4 getColor(float opCount, vec2 pos) {
 
 const int MAX_ITERATIONS = 100;
 
-#ifndef shadertoy
-void main()
-{
-    highp vec2 fragCoord = gl_FragCoord.xy;
-    vec4 fragColor = vec4(0);
-#else
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-#endif
 	float ratio = iResolution.x / iResolution.y / 2.0;
 	
 	vec2 pos = (fragCoord.xy / iResolution.yy ) - vec2(ratio, 0.5);
@@ -126,7 +119,13 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
         return;
     }
     fragColor = getColor(opCount,pos);
-#ifndef shadertoy
-    gl_FragColor = fragColor;
-#endif
 }
+
+#ifndef shadertoy
+void main(void)
+{
+    vec4 fragColor = vec4(0);
+    mainImage(fragColor,gl_FragCoord.xy);
+    gl_FragColor = fragColor;
+}
+#endif

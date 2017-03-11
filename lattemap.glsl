@@ -213,15 +213,8 @@ vec4 getNyanCatColor( vec2 p, float time )
 	return texture( iChannel0, p );
 }
 
-#ifndef shadertoy
-void main()
-{
-    highp vec2 fragCoord = gl_FragCoord.xy;
-    vec4 fragColor = vec4(0);
-#else
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-#endif
     float time = iGlobalTime;
     float iter=0.;
 	vec2 z =  scale*(2.*fragCoord.xy /iResolution.y-vec2(iResolution.x/iResolution.y,1.));
@@ -276,11 +269,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 	    fragColor = vec4(red,green,blue,1.0);
 #else
         fragColor = getNyanCatColor(vec2(blue,red),time);    
-#endif 
-
-#ifndef shadertoy
-    gl_FragColor = fragColor;
-#endif     
+#endif    
 }
 
 vec2 d_fn(vec2 z, int n) {
@@ -310,3 +299,12 @@ vec2 d_fn(vec2 z, int n) {
 
   }
 }
+
+#ifndef shadertoy
+void main(void)
+{
+    vec4 fragColor = vec4(0);
+    mainImage(fragColor,gl_FragCoord.xy);
+    gl_FragColor = fragColor;
+}
+#endif 

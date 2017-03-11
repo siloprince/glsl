@@ -216,15 +216,8 @@ int calc(const float width, const float height, const vec2 coord){
     return IIS(move(pos));
 }
 
-#ifndef shadertoy
-void main()
-{
-    highp vec2 fragCoord = gl_FragCoord.xy;
-    vec4 fragColor = vec4(0);
-#else
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-#endif
  	float time = iGlobalTime;  
     float range = mod(0.16*time,1.);
     if (range>.5) {
@@ -305,8 +298,13 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
         fragColor = getNyanCatColor(uv,time);
 #endif
     }
+}
 
 #ifndef shadertoy
+void main(void)
+{
+    vec4 fragColor = vec4(0);
+    mainImage(fragColor,gl_FragCoord.xy);
     gl_FragColor = fragColor;
-#endif    
 }
+#endif

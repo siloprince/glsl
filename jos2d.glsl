@@ -84,15 +84,8 @@ float  JosKleinian(vec3 z, vec3 paramA, vec3 paramB, vec3 paramC)
 	return flag;
 }
 
-#ifndef shadertoy
-void main()
-{
-    highp vec2 fragCoord = gl_FragCoord.xy;
-    vec4 fragColor = vec4(0);
-#else
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-#endif
    	vec2 uv = fragCoord.xy / iResolution.yy;
     uv = mix(vec2(0.),vec2(2.),  uv);
     
@@ -106,9 +99,14 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     if (hit==1.) {
         color = vec4(1.);
     }
-	fragColor = color;
-#ifndef shadertoy
-    gl_FragColor = fragColor;
-#endif    
+	fragColor = color; 
 }
 
+#ifndef shadertoy
+void main(void)
+{
+    vec4 fragColor = vec4(0);
+    mainImage(fragColor,gl_FragCoord.xy);
+    gl_FragColor = fragColor;
+}
+#endif 

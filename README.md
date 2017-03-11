@@ -8,21 +8,7 @@
 #endif
 ````
 
-* begin of main
-
-````
-#ifndef shadertoy
-void main()
-{
-    highp vec2 fragCoord = gl_FragCoord.xy;
-    vec4 fragColor = vec4(0);
-#else
-void mainImage( out vec4 fragColor, in vec2 fragCoord )
-{
-#endif
-````
-
-* end of main
+* main
 
 ````
 #ifndef shadertoy
@@ -32,7 +18,12 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 #endif 
 
 #ifndef shadertoy
+void main(void)
+{
+    vec4 fragColor = vec4(0);
+    mainImage(fragColor,gl_FragCoord.xy);
     gl_FragColor = fragColor;
+}
 #endif 
 ````
 

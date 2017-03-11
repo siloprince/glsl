@@ -46,15 +46,8 @@ vec2 getRepeller (vec2 z) {
     vec2 w = vec2(re,im);
     return w;
 }
-#ifndef shadertoy
-void main()
-{
-    highp vec2 fragCoord = gl_FragCoord.xy;
-    vec4 fragColor = vec4(0);
-#else
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-#endif
     float time = iGlobalTime;
     float iter=0.;
     float scale = 165.5;
@@ -137,8 +130,12 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 #else
     fragColor = getNyanCatColor(vec2(blue,red),time);    
 #endif 
-
-#ifndef shadertoy
-    gl_FragColor = fragColor;
-#endif 
 }
+#ifndef shadertoy
+void main(void)
+{
+    vec4 fragColor = vec4(0);
+    mainImage(fragColor,gl_FragCoord.xy);
+    gl_FragColor = fragColor;
+}
+#endif 

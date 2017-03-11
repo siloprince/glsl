@@ -5,15 +5,8 @@
 #define L for(int i=0;i<17;i++)
 #define V vec4
 
-#ifndef shadertoy
-void main()
-{
-    highp vec2 w = gl_FragCoord.xy;
-    vec4 c = vec4(0);
-#else
 void mainImage( out vec4 c, in vec2 w )
 {
-#endif
 	V p = V(w,0.,1.);
 	
 	float v=.0, f, r[17];
@@ -38,8 +31,14 @@ void mainImage( out vec4 c, in vec2 w )
     
 
 	c = V(v);
- 
-#ifndef shadertoy
-    gl_FragColor = c;
-#endif    
+  
 }
+
+#ifndef shadertoy
+void main(void)
+{
+    vec4 fragColor = vec4(0);
+    mainImage(fragColor,gl_FragCoord.xy);
+    gl_FragColor = fragColor;
+}
+#endif 
