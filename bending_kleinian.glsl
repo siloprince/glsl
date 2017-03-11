@@ -1,7 +1,27 @@
-//#define shadertoy https://www.shadertoy.com/view/MtVXzz
-#ifndef shadertoy
+//#version 150
+//https://www.shadertoy.com/view/MtVXzz
+#define SHADER_SHADERTOY 0
+#define SHADER_VSCODE 1
+#define SHADER_KODELIFE 2
+
+//#define SHADER SHADER_SHADERTOY
+#define SHADER SHADER_VSCODE
+//#define SHADER SHADER_KODELIFE
+
+#if SHADER != SHADER_SHADERTOY
 #define texture vec4(0);
 #endif
+#if SHADER == SHADER_KODELIFE
+uniform float time;uniform vec2 mouse, resolution;uniform vec3 spectrum;uniform sampler2D texture0, texture1, texture2, texture3, prevFrame;out vec4 fragColor;
+#define iResolution resolution
+#define iGlobalTime time
+#define iMouse mouse
+#define iChannel0 texture0
+#define iChannel1 texture1
+#define iChannel2 texture2
+#define iChannel3 texture3
+#endif
+
 precision mediump float;
 
 // from Syntopia http://blog.hvidtfeldts.net/index.php/2015/01/path-tracing-3d-fractals/
@@ -237,7 +257,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     	} else if (odd*3. > SAMPLE_NUM) {
             blue = .5*(1.-blue);
         }
-#ifndef shadertoy
+#if SHADER != SHADER_SHADERTOY
 	    fragColor = vec4(red,0.,blue,1.0);
 #else
          fragColor = getNyanCatColor(vec2(blue,red),time);    
@@ -247,11 +267,16 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
 
 }
-#ifndef shadertoy
+
+#if SHADER != SHADER_SHADERTOY
 void main(void)
 {
+#if SHADER == SHADER_VSCODE
     vec4 fragColor = vec4(0);
+#endif
     mainImage(fragColor,gl_FragCoord.xy);
+#if SHADER == SHADER_VSCODE	
     gl_FragColor = fragColor;
+#endif	
 }
-#endif 
+#endif

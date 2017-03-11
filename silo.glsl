@@ -1,14 +1,35 @@
-// Bitmap font is based on Hamneggs's https://www.shadertoy.com/view/4dtGD2
-// Tessellation code is based on soma_arc's https://www.shadertoy.com/view/4t3SDs
-// #define shadertoy https://www.shadertoy.com/view/ltGSzz
-#ifndef shadertoy
+//#version 150
+//https://www.shadertoy.com/view/ltGSzz
+#define SHADER_SHADERTOY 0
+#define SHADER_VSCODE 1
+#define SHADER_KODELIFE 2
+
+//#define SHADER SHADER_SHADERTOY
+#define SHADER SHADER_VSCODE
+//#define SHADER SHADER_KODELIFE
+
+#if SHADER != SHADER_SHADERTOY
 #define texture vec4(0);
 #endif
+#if SHADER == SHADER_KODELIFE
+uniform float time;uniform vec2 mouse, resolution;uniform vec3 spectrum;uniform sampler2D texture0, texture1, texture2, texture3, prevFrame;out vec4 fragColor;
+#define iResolution resolution
+#define iGlobalTime time
+#define iMouse mouse
+#define iChannel0 texture0
+#define iChannel1 texture1
+#define iChannel2 texture2
+#define iChannel3 texture3
+#endif
+
+// Bitmap font is based on Hamneggs's https://www.shadertoy.com/view/4dtGD2
+// Tessellation code is based on soma_arc's https://www.shadertoy.com/view/4t3SDs
+
 #define _f float
 const lowp _f CH_C    = _f(0xe111e), CH_E    = _f(0xf171f), CH_F    = _f(0xf1711),
-		  	  CH_I    = _f(0xf444f), CH_L    = _f(0x1111f), CH_N    = _f(0x9bd99),
+              CH_I    = _f(0xf444f), CH_L    = _f(0x1111f), CH_N    = _f(0x9bd99),
               CH_O    = _f(0x69996), CH_P    = _f(0x79971), CH_R    = _f(0x79759),
-		  	  CH_S    = _f(0xe1687), CH_T    = _f(0xf4444);
+              CH_S    = _f(0xe1687), CH_T    = _f(0xf4444);
 const lowp vec2 MAP_SIZE = vec2(4,5);
 #undef flt
 const lowp vec2 charSize = vec2(.5, .5);
@@ -87,33 +108,33 @@ const int MAX_ITERATIONS = 100;
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-	float ratio = iResolution.x / iResolution.y / 2.0;
-	
-	vec2 pos = (fragCoord.xy / iResolution.yy ) - vec2(ratio, 0.5);
-	pos *= 15.0;
+    float ratio = iResolution.x / iResolution.y / 2.0;
+    
+    vec2 pos = (fragCoord.xy / iResolution.yy ) - vec2(ratio, 0.5);
+    pos *= 15.0;
     pos.y += 0.5;
     pos.x +=0.65;
     if (pos.x < minxRange || pos.x > maxxRange ) {
         fragColor = black;
         return;
     }
-	
-	bool isFund = true;
-	float opCount = 0.;
-	for(int i = 0 ; i < MAX_ITERATIONS ; i++){
-		isFund = true;
+    
+    bool isFund = true;
+    float opCount = 0.;
+    for(int i = 0 ; i < MAX_ITERATIONS ; i++){
+        isFund = true;
         if(pos.x < 0. || rectSize.x < pos.x){
             opCount += abs(floor(pos.x / rectSize.x));
-        	pos.x = mod(pos.x, rectSize.x);
+            pos.x = mod(pos.x, rectSize.x);
             isFund = false;
         }
         if(pos.y < 0. || rectSize.y < pos.y){
             opCount += abs(floor(pos.y / rectSize.y));
-        	pos.y = mod(pos.y, rectSize.y);
+            pos.y = mod(pos.y, rectSize.y);
             isFund = false;
         }
-		if(isFund) break;
-	}	
+        if(isFund) break;
+    }   
     if (isFund==false) {
         fragColor = black;
         return;
@@ -121,11 +142,15 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     fragColor = getColor(opCount,pos);
 }
 
-#ifndef shadertoy
+#if SHADER != SHADER_SHADERTOY
 void main(void)
 {
+#if SHADER == SHADER_VSCODE
     vec4 fragColor = vec4(0);
-    mainImage(fragColor,gl_FragCoord.xy);
-    gl_FragColor = fragColor;
-}
 #endif
+    mainImage(fragColor,gl_FragCoord.xy);
+#if SHADER == SHADER_VSCODE 
+    gl_FragColor = fragColor;
+#endif  
+}
+#endif 
