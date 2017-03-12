@@ -2,7 +2,7 @@
 ## ifdef 
 * header
 ````
-//version 150
+//#version 150
 //https://www.shadertoy.com/view/MtVXzz
 #define SHADER_SHADERTOY 0
 #define SHADER_VSCODE 1
