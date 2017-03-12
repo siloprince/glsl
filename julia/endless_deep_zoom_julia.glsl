@@ -4,10 +4,12 @@
 #define SHADER_VSCODE 1
 #define SHADER_KODELIFE 2
 
+#if __VERSION__ != 150
 //#define SHADER SHADER_SHADERTOY
 #define SHADER SHADER_VSCODE
-//#define SHADER SHADER_KODELIFE
-
+#else
+#define SHADER SHADER_KODELIFE
+#endif
 #if SHADER != SHADER_SHADERTOY
 #define texture vec4(0);
 #endif
